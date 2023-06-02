@@ -12,6 +12,7 @@ button.addEventListener('click', (event) => {
     email: email,
     password: password
   };
+  
 
   fetch('http://localhost:5678/api/users/login', {
     method: 'POST',
@@ -33,8 +34,13 @@ button.addEventListener('click', (event) => {
     const token = data.token;
     console.log('Token:', token);
     window.location.href = "index.html";
+    localStorage.setItem('token', token);
+
+   
   })
   .catch(error => {
-    console.log('Erreur lors de l\'envoi des données:', error);
+     const msgerr=document.querySelector('small');
+     msgerr.innerText="email et/ou mot de passe invalide";
+     console.log('Erreur lors de l\'envoi des données:', error);
   });
 });
