@@ -28,6 +28,7 @@ async function getworks() {
       image.id = reponse[i].id;
       image.dataset.categorie = reponse[i].category.name;
       figcaption.innerText = reponse[i].title;
+     
 
       let figuresmodale = figures.cloneNode(true);
       figuresmodale.removeChild(figuresmodale.querySelector("figcaption"));
@@ -121,13 +122,16 @@ async function getworks() {
 // Parcours du tableau des réponses
 for (let i = 0; i < answers.length; i++) {
  
-  // Création d'une option pour chaque catégorie
+  // Création d'une option pour chaque catégorie et association de l'id
   let option = document.createElement("option");
   option.text = answers[i].name;
+  option.setAttribute("data-id", answers[i].id);
+  
 
 
   // Ajout de l'option à l'élément select
   selectElement.add(option);
+  
 }
   } catch (error) {
     console.error('Une erreur s\'est produite lors de la récupération des images:', error);
@@ -194,13 +198,13 @@ let modal = document.querySelector('.modal');
 let modal1 = document.querySelector('.modal1');
 let modalClose = document.querySelector('.modale-close');
 
-// Ouvrir la modale
+// Ouvrir la modale1
 function openModal() {
   modal1.style.display = 'block';
   modal1.setAttribute('aria-modal', 'true');
 }
 
-// Fermer la modale
+// Fermer la modale1
 function closeModal() {
   modal1.style.display = 'none';
   modal1.setAttribute('aria-modal', 'false');
@@ -226,6 +230,16 @@ modal1.addEventListener('click', function (event) {
 });
 
 /***modale2***/
+/**ouvrir lamodal */
+
+let Addpicture=document.querySelector('.modal-submit');
+let Modal2=document.querySelector('.modal2');
+
+Addpicture.addEventListener('click',function(){
+Modal2.style.display='block';
+closeModal();
+});
+
 /// Sélection de l'input file et de l'élément img
 const inputFile = document.getElementById("image");
 const ajoutImage = document.querySelector(".ajoutimage");
@@ -248,19 +262,24 @@ inputFile.addEventListener("change", function() {
 
 
 async function sendpictureAPI() {
-  console.log('fonctionok')
   let imageInput = document.getElementById('image').files[0];
-  console.log('essai',imageInput)
+  console.log('image',imageInput);
   let titleInput = document.getElementById('title').value;
-  let categoryInput = document.getElementById('category').value;
+  console.log('title',titleInput);
+  let selectElement = document.getElementById("category");
+  let selectedOption = selectElement.options[selectElement.selectedIndex];
+  let categoryId = selectedOption.dataset.id;
+  console.log('categorie',categoryId);
+
+
 
 
   let formData = new FormData();
   formData.append('image', imageInput);
   formData.append('title', titleInput);
-  formData.append('category', categoryInput);
+  formData.append('category', categoryId);
 
-  console.log(formData)
+  console.log('dataform',formData)
 
 
   
@@ -293,16 +312,17 @@ async function sendpictureAPI() {
 const validbutton = document.querySelector('.modale2-button');
 
 validbutton.addEventListener('click', async function(event) {
-  console.log('essai2')
-  
+ 
   var imageInput = document.getElementById('image');
   var titleInput = document.getElementById('title');
   var categoryInput = document.getElementById('category');
   
   if (imageInput.files.length === 0 || titleInput.value.trim() === '' || categoryInput.value.trim() === '') {
     event.preventDefault(); 
+
     alert('Veuillez remplir tous les champs obligatoires.');
   } else {
     await sendpictureAPI();
   }
 });
+
