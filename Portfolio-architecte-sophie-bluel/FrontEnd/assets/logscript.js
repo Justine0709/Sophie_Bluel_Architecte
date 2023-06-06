@@ -4,8 +4,8 @@ button.addEventListener('click', (event) => {
   event.preventDefault();
 
   // Récupérer les valeurs des champs
-  const email = document.querySelector('.imput-email').value;
-  const password = document.querySelector('.imput-password').value;
+  const email = document.querySelector('.input-email').value;
+  const password = document.querySelector('.input-password').value;
 
   // Créer l'objet de données à envoyer
   const data = {
@@ -13,7 +13,7 @@ button.addEventListener('click', (event) => {
     password: password
   };
   
-
+// Requête fetch : Récuperer la clés token et se diriger vers la page d'accueil si login ok
   fetch('http://localhost:5678/api/users/login', {
     method: 'POST',
     headers: {
@@ -35,8 +35,6 @@ button.addEventListener('click', (event) => {
     console.log('Token:', token);
     window.location.href = "index.html";
     localStorage.setItem('token', token);
-
-   
   })
   .catch(error => {
      const msgerr=document.querySelector('small');
