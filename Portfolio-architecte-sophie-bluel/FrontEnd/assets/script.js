@@ -226,37 +226,62 @@ let backgroundModal = document.querySelector('aside');
 let modal1 = document.querySelector('.modal1');
 let modalClose = document.querySelector('.modale-close');
 
+let Addpicture=document.querySelector('.modal-submit');
+let modal2=document.querySelector('.modal2');
+let Modaleclose2=document.querySelector('.modale-close2')
+
 
 
 // Ouvrir la modale1
-function openModal() {
+function openModal1() {
   modal1.style.display = 'block';
   modal1.setAttribute('aria-modal', 'true');
-  backgroundModal.classList.add('modal');
+  
 }
 
 // Fermer la Modale1
-function closeModal() {
+function closeModal1() {
   modal1.style.display = 'none';
   modal1.setAttribute('aria-modal', 'false');
-  backgroundModal.classList.remove('modal');
+  
 }
+
+// Ouvrir la modale1
+function openModal2() {
+  modal2.style.display = 'block';
+  modal2.setAttribute('aria-modal', 'true');
+  
+}
+
+// Fermer la Modale1
+function closeModal2() {
+  modal2.style.display = 'none';
+  modal2.setAttribute('aria-modal', 'false');
+  
+}
+
 
 // Événement de clic sur le bouton pour ouvrir la modale
 document.querySelector('.modified').addEventListener('click', function () {
-  openModal();
+  openModal1();
+  backgroundModal.classList.add('modal');
+ 
+  
 });
 
 // Événement de clic sur le bouton de fermeture de la modale
 modalClose.addEventListener('click', function () {
-  closeModal();
+  closeModal1(); 
+  backgroundModal.classList.remove('modal');
+
  
 });
 
-window.addEventListener('click', function (event) {
-  if (modal1.style.display === 'block'  && !event.target.classList.contains('modified'))
-    closeModal();
-
+  window.addEventListener('click', function (event) {
+    if (modal1.style.display === 'block' && !event.target.classList.contains('modified')) {
+    closeModal1();
+    backgroundModal.classList.remove('modal');
+  }
 });
 
 modal1.addEventListener('click', function (event) {
@@ -265,30 +290,49 @@ modal1.addEventListener('click', function (event) {
 
 //Modale2
 //Ouvrir la Modale2
-let Addpicture=document.querySelector('.modal-submit');
-let Modal2=document.querySelector('.modal2');
-let Modaleclose2=document.querySelector('.modale-close2')
+
 
 Addpicture.addEventListener('click',function(){
-Modal2.style.display='block';
-closeModal();
+openModal2();
+closeModal1();
 backgroundModal.classList.add('modal');
+
 });
 //Fermer la modale2
 Modaleclose2.addEventListener('click', function () {
-  Modal2.style.display='none';
+  closeModal2();
   backgroundModal.classList.remove('modal');
+  
+  // Réinitialiser l'image
+  ajoutImage.src = "";
+
+  // Cacher l'élément ajoutImage
+  ajoutImage.style.display = "none";
+  trash.style.display = 'none';
+
+  
 
 });
 
 window.addEventListener('click', function (event) {
-  if (Modal2.style.display === 'block' && event.target !== Modal2)
-  Modal2.style.display='none';
-  backgroundModal.classList.remove('modal');
+  if (modal2.style.display === 'block' && event.target !== modal2 && event.target !== document.querySelector('.modified')) {
+    closeModal2();
+    backgroundModal.classList.remove('modal');
+  
+  }
+
+
+  // Réinitialiser l'image
+  ajoutImage.src = "";
+  // Cacher l'élément ajoutImage
+  ajoutImage.style.display = "none";
+  trash.style.display = 'none';
+  
+
 
 });
 
-Modal2.addEventListener('click', function (event) {
+modal2.addEventListener('click', function (event) {
   event.stopPropagation();
 });
 
@@ -325,9 +369,22 @@ trash.addEventListener('click', function() {
   ajoutImage.style.display = "none";
   trash.style.display = 'none';
 
-  // Supprimer l'élément inputFile
-  inputFile.remove();
+  
 });
+
+//retour en arriere
+
+let arrow = document.querySelector('.fa-arrow-left');
+
+arrow.addEventListener('click',function(){
+  closeModal2();
+  openModal1();
+
+
+
+});
+
+
 
 
 // Requête Fetch POst
@@ -387,7 +444,7 @@ validbutton.addEventListener('click', async function(event) {
    await sendpictureAPI();
    getworks();
    modale2Button.classList.add('green');
-   Modal2.style.display='none';
+   modal2.style.display='none';
    backgroundModal.classList.remove('modal');
   }
 });

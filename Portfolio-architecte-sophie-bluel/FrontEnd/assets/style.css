@@ -391,13 +391,15 @@ footer {
 
 /***modale***/
 
+
 .modal {
 	position: fixed;
 	background-color: rgba(0, 0, 0, 0.2);
 	top:0;
 	bottom:0;
 	left: 0;
-	right: 0;	
+	right: 0;
+	z-index: 9999;
 }
 
 .modal1,
@@ -499,7 +501,15 @@ footer {
 	margin-top: 26px;
 	margin-bottom: 40px;
 }
-
+#titlemodal2{
+	margin-top: 40px;
+}
+.fa-arrow-left{
+	font-size: 18px;
+	position: absolute;
+	top:32px;
+	left:32px
+}
 .deleteimage{
 	color: white;
 	background-color: black;
