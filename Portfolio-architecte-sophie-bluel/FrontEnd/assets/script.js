@@ -428,6 +428,7 @@ validbutton.addEventListener('click', async function(event) {
    modale2Button.classList.add('green');
    modal2.style.display='none';
    backgroundModal.classList.remove('modal');
+   modal2reset();
   }
 });
 
