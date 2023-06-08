@@ -48,10 +48,10 @@ async function getworks() {
         img.parentNode.appendChild(deleteIcon);
 
         // Ecouteur d'évenement sur la corbeille pour supprimer image
-        deleteIcon.addEventListener('click', function () {
+          deleteIcon.addEventListener('click', function () {
           let imageId = image.id;
           console.log('ID de l\'image:', imageId);
-          deleteImage(imageId);
+          deleteImage(imageId); //voir requête fetch ci dessous
         });
       });
       
@@ -65,7 +65,6 @@ async function getworks() {
       figuresmodale.appendChild(editLink);
       editLink.classList.add("edit-link");
     }
-    
 
     /***ajouter la div des boutons filtres ***/
     let existingDiv = document.querySelector('.gallery');
@@ -98,6 +97,7 @@ async function getworks() {
         children[j].classList.add('large-button');
       }
     }
+
     // Ajout d'un ecouteur d'évenement pour filter les boutons
     let buttons = document.querySelectorAll('.contenairbuttons .button');
    
@@ -134,10 +134,11 @@ async function getworks() {
       });
       
     }
-  /***modale2*/
+
+  //modale2
   
-    let  selectElement = document.getElementById("category");
-    selectElement.innerHTML = ""; 
+  let  selectElement = document.getElementById("category");
+  selectElement.innerHTML = ""; 
     
   // Parcours du tableau des réponses
   for (let i = 0; i < answers.length; i++) {
@@ -147,8 +148,6 @@ async function getworks() {
   option.text = answers[i].name;
   option.setAttribute("data-id", answers[i].id);
   
-
-
   // Ajout de l'option à l'élément select
   selectElement.add(option);
   
@@ -192,7 +191,6 @@ async function deleteImage(imageId) {
   }
 }
 
-
 //Admin
 let banneradmin = document.querySelector('.banner-admin');
 let modified = document.querySelector('.modified');
@@ -228,9 +226,8 @@ let modalClose = document.querySelector('.modale-close');
 
 let Addpicture=document.querySelector('.modal-submit');
 let modal2=document.querySelector('.modal2');
-let Modaleclose2=document.querySelector('.modale-close2')
-
-
+let Modaleclose2=document.querySelector('.modale-close2');
+let titleInput=document.querySelector(".modale2-input");
 
 // Ouvrir la modale1
 function openModal1() {
@@ -239,42 +236,38 @@ function openModal1() {
   
 }
 
-// Fermer la Modale1
+// Fermer la modale1
 function closeModal1() {
   modal1.style.display = 'none';
   modal1.setAttribute('aria-modal', 'false');
   
 }
 
-// Ouvrir la modale1
+// Ouvrir la modale2
 function openModal2() {
   modal2.style.display = 'block';
   modal2.setAttribute('aria-modal', 'true');
   
 }
 
-// Fermer la Modale1
+// Fermer la modale2
 function closeModal2() {
   modal2.style.display = 'none';
   modal2.setAttribute('aria-modal', 'false');
   
 }
 
-
-// Événement de clic sur le bouton pour ouvrir la modale
+// Événement de clic sur le bouton pour ouvrir la modale1
 document.querySelector('.modified').addEventListener('click', function () {
   openModal1();
   backgroundModal.classList.add('modal');
  
-  
 });
 
-// Événement de clic sur le bouton de fermeture de la modale
+// Événement de clic sur le bouton de fermeture de la modale1
 modalClose.addEventListener('click', function () {
   closeModal1(); 
-  backgroundModal.classList.remove('modal');
-
- 
+  backgroundModal.classList.remove('modal'); 
 });
 
   window.addEventListener('click', function (event) {
@@ -288,50 +281,55 @@ modal1.addEventListener('click', function (event) {
   event.stopPropagation();
 });
 
-//Modale2
+//modale2
+//Ouvrir la modale2
+
+//Réinialiser la modale2
+function modal2reset(){
+  // Réinitialiser l'image
+  ajoutImage.src = "";
+
+  // Cacher l'élément ajoutImage
+  ajoutImage.style.display = "none";
+  trash.style.display = 'none';
+
+  //Réinitialiser le titre
+  titleInput.value="";
+};
+
 //Ouvrir la Modale2
-
-
 Addpicture.addEventListener('click',function(){
 openModal2();
 closeModal1();
 backgroundModal.classList.add('modal');
-
 });
+
 //Fermer la modale2
 Modaleclose2.addEventListener('click', function () {
   closeModal2();
   backgroundModal.classList.remove('modal');
-  
-  // Réinitialiser l'image
-  ajoutImage.src = "";
-
-  // Cacher l'élément ajoutImage
-  ajoutImage.style.display = "none";
-  trash.style.display = 'none';
-
-  
-
+  modal2reset()
 });
 
+//fermer la modale2
 window.addEventListener('click', function (event) {
   if (modal2.style.display === 'block' && event.target !== modal2 && event.target !== document.querySelector('.modified')) {
     closeModal2();
     backgroundModal.classList.remove('modal');
-  
+    modal2reset()
   }
-
-
-  // Réinitialiser l'image
-  ajoutImage.src = "";
-  // Cacher l'élément ajoutImage
-  ajoutImage.style.display = "none";
-  trash.style.display = 'none';
-  
-
-
 });
 
+//fermer la modale2
+window.addEventListener('click', function (event) {
+  if (modal2.style.display === 'block') {
+    closeModal2();
+    backgroundModal.classList.remove('modal');
+    modal2reset()
+  }
+});
+
+//pas de propagation sur la fenetre modal2
 modal2.addEventListener('click', function (event) {
   event.stopPropagation();
 });
@@ -354,40 +352,25 @@ inputFile.addEventListener("change", function() {
     // Afficher l'image
     ajoutImage.style.display = "block";
     trash.style.display='block'
-
   }
 
 });
 
-
 // Écouteur d'événement sur le clic de l'élément trash
 trash.addEventListener('click', function() {
-  // Réinitialiser l'image
-  ajoutImage.src = "";
-
-  // Cacher l'élément ajoutImage
-  ajoutImage.style.display = "none";
-  trash.style.display = 'none';
-
-  
+  modal2reset();
 });
 
-//retour en arriere
-
+//retour en arriere (modale2 vers modale1)
 let arrow = document.querySelector('.fa-arrow-left');
-
 arrow.addEventListener('click',function(){
   closeModal2();
   openModal1();
-
-
+  modal2reset()
 
 });
 
-
-
-
-// Requête Fetch POst
+// Requête Fetch Post
 async function sendpictureAPI() {
   let imageInput = document.getElementById('image').files[0];
   console.log('image',imageInput);
@@ -440,7 +423,6 @@ validbutton.addEventListener('click', async function(event) {
     event.preventDefault();
     alert('Veuillez remplir tous les champs obligatoires.');
   } else {
-
    await sendpictureAPI();
    getworks();
    modale2Button.classList.add('green');
