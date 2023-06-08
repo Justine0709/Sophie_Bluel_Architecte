@@ -313,21 +313,13 @@ Modaleclose2.addEventListener('click', function () {
 
 //fermer la modale2
 window.addEventListener('click', function (event) {
-  if (modal2.style.display === 'block' && event.target !== modal2 && event.target !== document.querySelector('.modified')) {
-    closeModal2();
-    backgroundModal.classList.remove('modal');
-    modal2reset()
-  }
-});
-
-//fermer la modale2
-window.addEventListener('click', function (event) {
   if (modal2.style.display === 'block') {
     closeModal2();
     backgroundModal.classList.remove('modal');
     modal2reset()
   }
 });
+
 
 //pas de propagation sur la fenetre modal2
 modal2.addEventListener('click', function (event) {
