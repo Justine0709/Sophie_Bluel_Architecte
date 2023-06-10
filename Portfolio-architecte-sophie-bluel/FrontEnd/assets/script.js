@@ -228,6 +228,7 @@ let Addpicture=document.querySelector('.modal-submit');
 let modal2=document.querySelector('.modal2');
 let Modaleclose2=document.querySelector('.modale-close2');
 let titleInput=document.querySelector(".modale2-input");
+let modale2Button= document.querySelector('.modale2-button');
 
 // Ouvrir la modale1
 function openModal1() {
@@ -295,6 +296,9 @@ function modal2reset(){
 
   //Réinitialiser le titre
   titleInput.value="";
+
+  //Bouton valider en gris
+  modale2Button.classList.remove('green');
 };
 
 //Ouvrir la Modale2
@@ -409,18 +413,20 @@ validbutton.addEventListener('click', async function(event) {
   let imageInput = document.getElementById('image');
   let titleInput = document.getElementById('title');
   let categoryInput = document.getElementById('category');
-  let modale2Button= document.querySelector('.modale2-button');
+ 
   
   if (imageInput.files.length === 0 || titleInput.value.trim() === '' || categoryInput.value.trim() === '') {
     event.preventDefault();
     alert('Veuillez remplir tous les champs obligatoires.');
   } else {
+   modale2Button.classList.add('green');
    await sendpictureAPI();
    getworks();
-   modale2Button.classList.add('green');
-   modal2.style.display='none';
-   backgroundModal.classList.remove('modal');
-   modal2reset();
+   setTimeout(function() {
+    modal2.style.display = 'none';
+    backgroundModal.classList.remove('modal');
+    modal2reset();
+  }, 500);
   }
 });
 

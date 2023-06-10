@@ -426,6 +426,7 @@ footer {
 		overflow: auto;
 		width: 80%;
 		max-width: 400px;
+		max-height: 400px;
 		margin-top:26px;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
